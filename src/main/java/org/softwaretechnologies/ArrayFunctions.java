@@ -47,7 +47,6 @@ public final class ArrayFunctions {
         for(int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 a[i][j] = matrix[j][i];
-                System.out.println(a[i][j]);
             }
         }
 
