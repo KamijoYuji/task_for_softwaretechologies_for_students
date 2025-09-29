@@ -52,11 +52,31 @@ public class Money {
      */
     @Override
     public int hashCode() {
-        // TODO: реализуйте вышеуказанную функцию
-
-
-        Random random = new Random();
-        return random.nextInt();
+        BigDecimal scale = amount==null?new BigDecimal(1):amount.setScale(4,RoundingMode.HALF_UP);
+        scale = scale.multiply(new BigDecimal(10000));
+        switch (type){
+            case USD -> {
+                scale = scale.add(new BigDecimal(1));
+                break;
+            }
+            case EURO -> {
+                scale = scale.add(new BigDecimal(2));
+                break;
+            }
+            case RUB -> {
+                scale = scale.add(new BigDecimal(3));
+                break;
+            }
+            case KRONA -> {
+                scale = scale.add(new BigDecimal(4));
+                break;
+            }
+            default -> {
+                scale = scale.add(new BigDecimal(5));
+                break;
+            }
+    }
+    return scale.intValue()>=MAX_VALUE-5? MAX_VALUE:scale.intValue();
     }
 
     /**
@@ -78,7 +98,6 @@ public class Money {
      */
     @Override
     public String toString() {
-        // TODO: реализуйте вышеуказанную функцию
         String str = type.toString()+": "+ amount.setScale(4, RoundingMode.HALF_UP);
         return str;
     }
