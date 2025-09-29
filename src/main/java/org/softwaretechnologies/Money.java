@@ -17,7 +17,7 @@ public class Money {
 
     /**
      * Money равны, если одинаковый тип валют и одинаковое число денег до 4 знака после запятой.
-     * Округление по правилу: если >= 5, то в большую сторону, интаче - в меньшую
+     * Округление по правилу: если >= 5, то в большую сторону, иначе - в меньшую
      * Пример округления:
      * BigDecimal scale = amount.setScale(4, RoundingMode.HALF_UP);
      *
@@ -26,9 +26,13 @@ public class Money {
      */
     @Override
     public boolean equals(Object o) {
-        // TODO: реализуйте вышеуказанную функцию
+            if(!(o instanceof Money))
+                return false;
 
-        return false;
+            BigDecimal scaleOfO = ((Money) o).getAmount().setScale(4,RoundingMode.HALF_UP);
+            BigDecimal scaleAmount = amount.setScale(4,RoundingMode.HALF_UP);
+
+        return (scaleOfO.equals(scaleAmount)) && (((Money) o).getType() == type);
     }
 
     /**
@@ -75,7 +79,7 @@ public class Money {
     @Override
     public String toString() {
         // TODO: реализуйте вышеуказанную функцию
-        String str = type.toString()+": "+amount.setScale(4, RoundingMode.HALF_UP).toString();
+        String str = type.toString()+": "+ amount.setScale(4, RoundingMode.HALF_UP);
         return str;
     }
 
@@ -90,7 +94,7 @@ public class Money {
     public static void main(String[] args) {
         Money money = new Money(MoneyType.EURO, BigDecimal.valueOf(10.00012));
         Money money1 = new Money(MoneyType.USD, BigDecimal.valueOf(10.5000));
-        System.out.println(money1.toString());
+        System.out.println(money1);
         System.out.println(money1.hashCode());
         System.out.println(money.equals(money1));
     }
