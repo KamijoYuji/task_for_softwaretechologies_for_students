@@ -101,13 +101,15 @@ public class EqualsHashCodeTest {
          * assertFalse(a);
          */
 
+
         // TODO: Встатьте нужные выражения assertTrue или assertFalse для переменных a b c d e чтобы тест проходил
         // ↓↓↓↓ КОД ДЛЯ ЗАМЕНЫ ↓↓↓↓
-        assertTrue(a);
-        assertFalse(b);
-        assertFalse(c);
-        assertFalse(d);
-        assertTrue(e);
+        assertTrue(a);  //equals() стандартно, hashCode() даёт равный хэш-код для одинаковых объектов
+        assertFalse(b); //hashCode() при многократных вызовах у одного и того же объекта выдаёт разные результаты
+        assertFalse(c); //equals() выбросит исключение при передачи в него null
+        assertFalse(d); //если x.equals(y) == true, то x.hashCode() == y.hashCode() должно быть, но
+        //это может нарушиться, если у объектов разные значения a
+        assertTrue(e); //есть все проверки и сравнение по a в equals(), в hashCode() возврат a
         // ↑↑↑↑ КОД ДЛЯ ЗАМЕНЫ ↑↑↑↑
 
     }

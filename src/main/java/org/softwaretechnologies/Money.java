@@ -26,13 +26,26 @@ public class Money {
      */
     @Override
     public boolean equals(Object o) {
-            if(!(o instanceof Money))
-                return false;
+        if(this == o)
+            return true;
+        if(!(o instanceof Money))
+            return false;
 
-            BigDecimal scaleOfO = ((Money) o).getAmount().setScale(4,RoundingMode.HALF_UP);
-            BigDecimal scaleAmount = amount.setScale(4,RoundingMode.HALF_UP);
+        Money other = (Money) o;
 
-        return (scaleOfO.equals(scaleAmount)) && (((Money) o).getType() == type);
+        boolean boolType = (type == null && other.type == null);
+
+        if(!boolType){
+            if(type == null || other.type == null) return false;
+            boolType = (type.equals(other.type));
+        }
+        if(amount == null && other.amount == null) return true;
+        if(amount == null || other.amount == null) return false;
+
+        BigDecimal scaleThis = amount.setScale(4,RoundingMode.HALF_UP);
+        BigDecimal scaleOther = other.amount.setScale(4, RoundingMode.HALF_UP);
+
+        return scaleThis.equals(scaleOther)&&boolType;
     }
 
     /**
@@ -52,31 +65,22 @@ public class Money {
      */
     @Override
     public int hashCode() {
-        BigDecimal scale = amount==null?new BigDecimal(1):amount.setScale(4,RoundingMode.HALF_UP);
-        scale = scale.multiply(new BigDecimal(10000));
-        switch (type){
-            case USD -> {
-                scale = scale.add(new BigDecimal(1));
-                break;
+        BigDecimal base = (amount == null)?new BigDecimal(10000):amount.setScale(4,RoundingMode.HALF_UP).multiply(new BigDecimal(10000));
+
+        int typeValue = 5;
+        if(type != null) {
+            switch (type){
+                case USD: typeValue = 1; break;
+                case EURO: typeValue = 2; break;
+                case RUB: typeValue = 3; break;
+                case KRONA: typeValue = 4; break;
             }
-            case EURO -> {
-                scale = scale.add(new BigDecimal(2));
-                break;
-            }
-            case RUB -> {
-                scale = scale.add(new BigDecimal(3));
-                break;
-            }
-            case KRONA -> {
-                scale = scale.add(new BigDecimal(4));
-                break;
-            }
-            default -> {
-                scale = scale.add(new BigDecimal(5));
-                break;
-            }
-    }
-    return scale.intValue()>=MAX_VALUE-5? MAX_VALUE:scale.intValue();
+        }
+
+        BigDecimal result = base.add(new BigDecimal(typeValue));
+
+        return result.compareTo(BigDecimal.valueOf(MAX_VALUE - 5)) >= 0?
+                MAX_VALUE:result.intValue();
     }
 
     /**
@@ -98,8 +102,10 @@ public class Money {
      */
     @Override
     public String toString() {
-        String str = type.toString()+": "+ amount.setScale(4, RoundingMode.HALF_UP);
-        return str;
+        String typeStr = (type==null)?"null":type.toString();
+        String amountStr = (amount == null)?"null":amount.setScale(4, RoundingMode.HALF_UP).toString();
+
+        return typeStr+": "+amountStr;
     }
 
     public BigDecimal getAmount() {
