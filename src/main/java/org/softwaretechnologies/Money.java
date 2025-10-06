@@ -2,7 +2,6 @@ package org.softwaretechnologies;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Random;
 
 import static java.lang.Integer.MAX_VALUE;
 
