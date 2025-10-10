@@ -61,7 +61,6 @@ public class ExceptionTask {
      * @return конкатенацию двух строк: кротчайшую из двух строк с другой строкой.
      */
     public static Optional<String> mergeStrings(String first, String second) {
-        // TODO: реализуйте вышеуказанную функцию
         if(first == null&&second == null)
             return Optional.empty();
 
