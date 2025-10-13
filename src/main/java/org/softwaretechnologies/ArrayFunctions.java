@@ -16,6 +16,9 @@ public final class ArrayFunctions {
             int temp = array[i];
             array[i] = array[length-i-1];
             array[length-i-1] = temp;
+            //Пример:
+            //array = {1,2,3,4}, temp = 1, array = {4,2,3,4}, array = {4,2,3,1}
+            //array = {4,2,3,1}, temp = 2, array = {4,3,3,1}, array = {4,3,2,1}
         }
     }
 
@@ -50,9 +53,26 @@ public final class ArrayFunctions {
             }
         }
 
+         /* matrix =
+       1  2  3
+       4  5  6
+       7  8  9
+
+       a =
+       1  4  7
+       2  5  8
+       3  6  9
+       */
+
         for(int i = 0; i < x; i++)
             for(int j = 0; j < y; j++) {
                 matrix[i][j] = a[i][j];
             }
+
+         /* matrix =
+       1  4  7
+       2  5  8
+       3  6  9
+       */
     }
 }
