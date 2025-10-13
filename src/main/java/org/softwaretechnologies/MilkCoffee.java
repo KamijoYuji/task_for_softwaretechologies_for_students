@@ -4,7 +4,21 @@ package org.softwaretechnologies;
 //  к стоимости базового напитка добавьте 10.
 //  к описанию добавьте " + milk"
 
-public class MilkCoffee {
+public class MilkCoffee extends Coffee {
+    private int cost;
+    private String description;
+    @Override
+    public int getCost() {
+        return cost + 10;
+    }
 
+    @Override
+    public String description() {
+        return description + " + milk";
+    }
 
+    public MilkCoffee(Coffee coffee) {
+        description = coffee.description();
+        cost = coffee.getCost();
+    }
 }
