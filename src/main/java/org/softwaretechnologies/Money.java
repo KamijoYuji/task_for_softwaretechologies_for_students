@@ -34,13 +34,21 @@ public class Money {
 
         boolean boolType = (type == null && other.type == null);
 
+        //если хотя бы один из типов не равен null
         if(!boolType){
+            //то один из них может быть нулевым (тогда Money не равны)
             if(type == null || other.type == null) return false;
+            //либо оба типа существуют и они равны, либо нет (boolType это отражает здесь)
             boolType = (type.equals(other.type));
         }
+
+        //если amount оба null, то Money равны
         if(amount == null && other.amount == null) return true;
+        //иначе amount оба не null, но один из них null, тогда Money не равны
         if(amount == null || other.amount == null) return false;
 
+        //amount тут существуют, результат сравнения типов в boolType
+        //дальше идёт финальная проверка amount и возврат окончательного результата
         BigDecimal scaleThis = amount.setScale(4,RoundingMode.HALF_UP);
         BigDecimal scaleOther = other.amount.setScale(4, RoundingMode.HALF_UP);
 
